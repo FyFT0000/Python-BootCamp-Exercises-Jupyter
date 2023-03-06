@@ -1,0 +1,2 @@
+Test to create and write a new file
+This is a new line
