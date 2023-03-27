@@ -1,0 +1,57 @@
+
+wikipedia.org/wiki/War_(card_game)
+
+Ace	A	
+King	K
+Queen	Q
+Jack	J
+
+Heart	H	Red	A K Q J 10 9 8 7 6 5 4 3 2
+Diamond	D	Red	A K Q J 10 9 8 7 6 5 4 3 2
+Clover	C	Black	A K Q J 10 9 8 7 6 5 4 3 2
+Pikes	P	Black	A K Q J 10 9 8 7 6 5 4 3 2
+
+_ Mix up all the 52 cards.
+_ Deal out all the cards, so that each player has 26.
+_ Both players now turn their top card. Whoever turned the higher card takes both cards and adds them to the bottom of their packet.
+_ Then both players turn up their next card and so on.
+_ If the turned up cards are equal there is a war. Both players play the next card of their pile face down and then another card face-up. Whoever has the higher of the new face-up cards wins the war and adds all six cards face-down to the bottom of their packet. If the new face-up cards are equal as well, the war continues: each player puts another card face-down and one face-up. The war goes on like this as long as the face-up cards continue to be equal. As soon as they are different the player of the higher card wins all the cards in the war. 
+_ The game continues until one player has all the cards and wins.
+
+
+
+
+class Game
+	propieties
+		Player/Packet: (A,B)
+		Turn: (Pile,Battel,War)
+	constructor
+		Game(Player,Turn)
+	methods
+		Rules
+
+class Cards : extends Game
+	propieties
+		Rank: (A K Q J 10 9 8 7 6 5 4 3 2)
+		Suits: (Heart,Diamond,Clover,Pikes)
+		Color: (Red,Black)
+	constructor
+		Cards(Player,Turn, Rank,Suit,Color)
+	methods
+		Rules
+
+class Players : extends Game
+	propieties
+		Quantity: (0 to 52)
+	constructor
+		(Player,Turn, Quantity)
+	methods
+		Rules
+
+
+
+
+
+
+
+
