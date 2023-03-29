@@ -24,19 +24,19 @@ _ The game continues until one player has all the cards and wins.
 class Game
 	propieties
 		Player/Packet: (A,B)
-		Turn: (Pile,Battel,War)
+		Turn: (Pile.1-52,Battel,War)
 	constructor
 		Game(Player,Turn)
 	methods
 		Rules
 
-class Cards : extends Game
+class Card : extends Game
 	propieties
 		Rank: (A K Q J 10 9 8 7 6 5 4 3 2)
 		Suits: (Heart,Diamond,Clover,Pikes)
 		Color: (Red,Black)
 	constructor
-		Cards(Player,Turn, Rank,Suit,Color)
+		Card(Player,Turn, Rank,Suit,Color)
 	methods
 		Rules
 
