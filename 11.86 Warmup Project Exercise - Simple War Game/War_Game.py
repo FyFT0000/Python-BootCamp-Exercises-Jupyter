@@ -1,19 +1,19 @@
 
 """ Simple War Game, card game. """
+
 import os
 import random
 import time
 
 class Game():
-    """ Game calls that is used to ineritance to the classes Players and Cards """
+    """ Game() calls that is used to ineritance to the classes Players and Cards """
     def __init__(self, player,turn):
         self.player = player
         self.turn = turn
 
-        pass
 
 class Card(Game):
-    """  """
+    """ Card(Game) """
     def __init__(self, player, turn,rank,suits,color):
         self.player = player
         self.turn = turn
@@ -29,8 +29,9 @@ class Card(Game):
         elif self.rank == 14: print_card = 'A'
         return f'{self.player},{self.turn},{print_card}.{self.suits}.{self.color}'
 
+
 class Player(Game):
-    """  """
+    """ Player(Game) """
     def __init__(self, player, turn, packet):
         self.player = player
         self.turn = turn
@@ -42,11 +43,15 @@ class Player(Game):
             print_player += f'{n}_'
         print_player += f'\n{len(self.packet)}'
         return print_player
+
+
 def cls():
+    """ cls() """
     os.system('cls' if os.name=='nt' else 'clear')
 
+
 def create_players():
-    """  """
+    """ create_players() """
     select = "NO"
     while True:
         player1_name = input("Please enter de Player 1 name: ")
@@ -60,8 +65,9 @@ def create_players():
             #raise ValueError("Enter de desired name or YES if it is correct")
     return player1_name, player2_name
 
+
 def random_cards():
-    """  """
+    """ random_cards() """
     rank = (14,13,12,11,10,9,8,7,6,5,4,3,2)
     suits = ('Heart','Diamond','Clover','Pikes')
     color = ('Red','Black')
@@ -76,8 +82,9 @@ def random_cards():
     random.shuffle(packet)
     return packet
 
+
 def deal_cards(packet,player1Name,player2Name):
-    """  """
+    """ deal_cards(packet,player1Name,player2Name) """
     count = 0
     player1 = []
     player2 = []
@@ -91,7 +98,9 @@ def deal_cards(packet,player1Name,player2Name):
     p2 = Player(player2Name,'Pile',player2)
     return p1,p2
 
+
 def game_win(p1,p2,i):
+    """ game_win(p1,p2,i) """
     if len(p1.packet) > i and len(p2.packet) > i:
         return True
     else:
@@ -103,6 +112,7 @@ def game_win(p1,p2,i):
 
     
 def game_battle(p1,p2,i):
+    """ game_battle(p1,p2,i) """
     #time.sleep(0.01)
     print(f'{len(p1.packet):2} . {p1.packet[i].rank:2}  -  {p2.packet[i].rank:2} . {len(p2.packet):2},     {i:2}',flush=True)
     if p1.packet[i].rank > p2.packet[i].rank:
@@ -127,8 +137,8 @@ def game_battle(p1,p2,i):
         return 'War'
 
     
-
 def game_play():
+    """ game_play() """
     turn = "Pile"
 
     player1_name, player2_name = create_players()
@@ -167,22 +177,3 @@ def game_play():
 
 
 game_play()
-
-
-""" p1,p2 = deal_cards(random_cards(),'Pl1','Pl2')
-print(p1)
-#print(p2)
-print(p1.packet[25].rank) """
-
-""" card1 = Card('Player','Pile','A','Heart','Red')
-print(card1) """
-
-""" print(random_cards())
-print(len(random_cards())) """
-
-
-
-    
-
-
-        
