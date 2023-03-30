@@ -27,7 +27,7 @@ class Card(Game):
         elif self.rank == 12: print_card = 'Q'
         elif self.rank == 13: print_card = 'K'
         elif self.rank == 14: print_card = 'A'
-        return f'{self.player},{self.turn},{print_card}.{self.suits}.{self.color}'
+        return f'{self.player},{print_card}.{self.suits}'
 
 
 class Player(Game):
@@ -38,9 +38,9 @@ class Player(Game):
         self.packet = packet
 
     def __str__(self):
-        print_player = f'{self.player},{self.turn}:\n'
+        print_player = f'{self.player}:\n'
         for n in self.packet:
-            print_player += f'{n}_'
+            print_player += f'{n} _ '
         print_player += f'\n{len(self.packet)}'
         return print_player
 
@@ -56,13 +56,12 @@ def create_players():
     while True:
         player1_name = input("Please enter de Player 1 name: ")
         player2_name = input("Please enter de Player 2 name: ")
-        select = input(f"is the name {player1_name} and {player2_name} correct for Player 1 and Player 2?. YES / NO : ").upper()
+        select = input(f"is the name {player1_name} and {player2_name}correct for Player 1 and Player 2?. YES / NO : ").upper()
         cls()
         if select.startswith("Y"):
             break
         else:
             print("Enter de desired name for the Player. Or YES if it is correct")
-            #raise ValueError("Enter de desired name or YES if it is correct")
     return player1_name, player2_name
 
 
@@ -110,11 +109,11 @@ def game_win(p1,p2,i):
             print(f'Player {p2.player} Wins!!')
         return False
 
-    
+
 def game_battle(p1,p2,i):
     """ game_battle(p1,p2,i) """
     #time.sleep(0.01)
-    print(f'{len(p1.packet):2} . {p1.packet[i].rank:2}  -  {p2.packet[i].rank:2} . {len(p2.packet):2},     {i:2}',flush=True)
+    print(f'{len(p1.packet):2} . {p1.packet[i].rank:2}  -  {p2.packet[i].rank:2} . {len(p2.packet):2}     {i:2}',flush=True)
     if p1.packet[i].rank > p2.packet[i].rank:
         n = 0
         while n <= i:
@@ -136,7 +135,7 @@ def game_battle(p1,p2,i):
     else:
         return 'War'
 
-    
+
 def game_play():
     """ game_play() """
     turn = "Pile"
@@ -164,16 +163,15 @@ def game_play():
             indice_war += 1
             if i > indice_max_war:
                 indice_max_war = i
-            print('------ War ------',flush=True)
+            print('------- War -------',flush=True)
             time.sleep(0.5)
-        
-        
-
-    print(f'War: {indice_war}, Battle: {indice_battle}, Turns: {indice_war + indice_battle}, Long War: {indice_max_war}')
 
     et = time.time()
-    print('Time: ',((et-st)*1000),' miliseconds.')
-    
+
+    print(f'Turns: {indice_war + indice_battle}, Battles: {indice_battle}, War: {indice_war}, Long War: {indice_max_war}')
+
+    print('Time: ',f'{((et-st)*1000):.4f}',' miliseconds.')
+
 
 
 game_play()
