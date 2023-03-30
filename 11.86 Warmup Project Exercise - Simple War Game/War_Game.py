@@ -168,7 +168,7 @@ def game_play():
 
     et = time.time()
 
-    print(f'Turns: {indice_war + indice_battle}, Battles: {indice_battle}, War: {indice_war}, Long War: {indice_max_war}')
+    print(f'Turns: {indice_war + indice_battle}, Battles: {indice_battle}, War: {indice_war}, Long War: {int(indice_max_war/2)}')
 
     print('Time: ',f'{((et-st)*1000):.4f}',' miliseconds.')
 
