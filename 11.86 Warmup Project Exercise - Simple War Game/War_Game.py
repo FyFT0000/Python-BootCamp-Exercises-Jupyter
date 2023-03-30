@@ -91,36 +91,40 @@ def deal_cards(packet,player1Name,player2Name):
     p2 = Player(player2Name,'Pile',player2)
     return p1,p2
 
-def game_win(p1,p2):
-    if len(p1.packet) and len(p2.packet) > 0:
+def game_win(p1,p2,i):
+    if len(p1.packet) > i and len(p2.packet) > i:
         return True
     else:
+        if len(p1.packet) > len(p2.packet):
+            print(f'Player {p1.player} Wins!!')
+        else:
+            print(f'Player {p2.player} Wins!!')
         return False
 
-def game_war(p1,p2):
-    if p1.packet[0].rank == p2.packet[0].rank:
-        return True
-    else:
-        return False
     
-def game_battle(p1,p2):
-    print(f'{len(p1.packet)}.{p1.packet[0].rank}--{p2.packet[0].rank}.{len(p2.packet)}')
-    if p1.packet[0].rank > p2.packet[0].rank:
-        p1.packet.append(p2.packet[0])
-        p1.packet.append(p1.packet[0])
-        p1.packet.pop(0)
-        p2.packet.pop(0)
-    elif p1.packet[0].rank < p2.packet[0].rank:
-        p2.packet.append(p1.packet[0])
-        p2.packet.append(p2.packet[0])
-        p2.packet.pop(0)
-        p1.packet.pop(0)
-
+def game_battle(p1,p2,i):
+    #time.sleep(0.01)
+    print(f'{len(p1.packet):2} . {p1.packet[i].rank:2}  -  {p2.packet[i].rank:2} . {len(p2.packet):2},     {i:2}',flush=True)
+    if p1.packet[i].rank > p2.packet[i].rank:
+        n = 0
+        while n <= i:
+            p1.packet.append(p2.packet[0])
+            p1.packet.append(p1.packet[0])
+            p1.packet.pop(0)
+            p2.packet.pop(0)
+            n += 1
+        return 'Battle'
+    elif p1.packet[i].rank < p2.packet[i].rank:
+        n = 0
+        while n <= i:
+            p2.packet.append(p1.packet[0])
+            p2.packet.append(p2.packet[0])
+            p2.packet.pop(0)
+            p1.packet.pop(0)
+            n += 1
+        return 'Battle'
     else:
-        #p2.packet.append(p2.packet[0])
-        p2.packet.pop(0)
-        #p1.packet.append(p1.packet[0])
-        p1.packet.pop(0)
+        return 'War'
 
     
 
@@ -128,17 +132,35 @@ def game_play():
     turn = "Pile"
 
     player1_name, player2_name = create_players()
+    #player1_name, player2_name = ('Ang','Fac')
 
     p1,p2 = deal_cards(random_cards(),player1_name,player2_name)
     print(p1)
     print(p2)
-    indice = 0
+    cls()
+    i = 0
+    indice_battle = 0
+    indice_war = 0
+    indice_max_war = 0
     st = time.time()
-    while game_win(p1,p2):
-        game_battle(p1,p2)
-        indice += 1
-    print(indice)
-    
+
+    while game_win(p1,p2,i):
+        turn = game_battle(p1,p2,i)
+        if turn == "Battle":
+            i = 0
+            indice_battle += 1
+        elif turn == 'War':
+            i += 2
+            indice_war += 1
+            if i > indice_max_war:
+                indice_max_war = i
+            print('------ War ------',flush=True)
+            time.sleep(0.5)
+        
+        
+
+    print(f'War: {indice_war}, Battle: {indice_battle}, Turns: {indice_war + indice_battle}, Long War: {indice_max_war}')
+
     et = time.time()
     print('Time: ',((et-st)*1000),' miliseconds.')
     
