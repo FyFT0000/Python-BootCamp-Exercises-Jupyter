@@ -6,7 +6,9 @@ import random
 import time
 
 class Game():
-    """ Game() calls that is used to ineritance to the classes Players and Cards """
+    """ Game() calls that is used to ineritance to the classes Players and Cards.
+    https://www.pagat.com/war/war.html
+    """
     def __init__(self, player,turn):
         self.player = player
         self.turn = turn
