@@ -24,7 +24,7 @@ _ The game continues until one player has all the cards and wins.
 class Game
 	propieties
 		Player/Packet: (A,B)
-		Turn: (Pile.1-52,Battel,War)
+		Turn: (Pile.1-52,Battle,War)
 	constructor
 		Game(Player,Turn)
 	methods
@@ -42,9 +42,9 @@ class Card : extends Game
 
 class Players : extends Game
 	propieties
-		Quantity: (0 to 52)
+		Packet: (0 to 52)
 	constructor
-		(Player,Turn, Quantity)
+		(Player,Turn, Packet)
 	methods
 		Rules
 

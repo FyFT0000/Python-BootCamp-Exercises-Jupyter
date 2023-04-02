@@ -1,0 +1,79 @@
+BlackJack Game: (also knows as 21)
+
+https://www.pagat.com/banking/blackjack.html
+
+
+Dealer: CPU
+Player: Human, only one player
+Cards: standard deck of 52 cards
+
+Game Rules:
+    _Player Goal,  is to get a hand total of closer to 21 than the dealer without going over 21 (busting).
+    _Player start te game.
+    _Ignore actions like: Insurance, Split, DoubleDown.
+    _Jack,Queen,King value is 10
+    _Ace is 11, unless the hand > 21, in which case it is 1.
+    _Total of 21 on the first two cards is a "natural" or "blackjack".
+    _A blackjack beats any hand that is not a blackjack, even one with a value of 21.
+    _When the cut card is reached this indicates the final deal of the game before the cards are shuffled.
+    _Select number of decks (1,2,4,6,8)
+    
+
+class Card:
+    propieties
+	    rank
+	    suit
+    constructor
+        Card(rank,suit)
+    methods
+        print_card
+
+class Dealer:
+    propieties
+        number_decks
+        chips_bank
+        deck
+    constructor
+        Board(cards,number_decks,chips_bank)
+    methods
+        deck_create
+        deck_shuffle
+        deck_add_cut_card
+        deck_control
+        player_control
+        game_start (hand out 4 cards)
+        game_hit (recive another card)
+        game_stay (stop receiving cards)
+
+class Player:
+    propieties
+        name
+        chips_account
+    constructor
+        Player(name,chips_account)
+    methods
+        chips_beat
+        
+
+
+
+
+
+
+1_  Player: 2 Cards Face Up
+    Dealer: 1 Card Face Up, 1 Card Face Down
+2_  Player go first: hit or stay.
+        _if hitting > 21, lost the bet.
+        _If total = 21 automatically stands.
+3_  Dealer: if player < 21 dealer hits until archive 17.
+        _if sum_dealer (< 21 and > sum_player) , dealer win (keep bet)
+        _if sum_dealer > 21 , player win.
+        __If sum_dealer = sum_player, is a tie.
+4_  Pays:
+        _if tie = 21, blackjack win, and pay 2,5 the bet.
+        _if tie, bet is returned to player.
+        _if win, pays 2 the bet.
+        _if lost, bet go to the Board.
+        
+
+
