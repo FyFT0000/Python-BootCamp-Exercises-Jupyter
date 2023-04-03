@@ -286,6 +286,8 @@ def game_play():
             print(n, end=" ")
         print(f'\nthe lenght is {len(dealer.deck)}')
         print('--------------------------------------\n') """
+        #To use print only insted of the for loop.
+        #print(*dealer.deck)
 
 
 
