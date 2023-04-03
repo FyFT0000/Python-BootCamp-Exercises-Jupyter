@@ -25,7 +25,7 @@ card_ranks_21 = {'K':10,'Q':10,'J':10,10:10,9:9,8:8,7:7,6:6,5:5,4:4,3:3,2:2,'A':
 card_suits = {'H':'Heart','D':'Diamond','C':'Clover','P':'Pikes'}
 
 class Card():
-    """  """
+    """ Card() """
     def __init__(self,rank,suit) -> None:
         self.rank = rank
         self.suit = suit
@@ -37,7 +37,7 @@ class Card():
 
 
 class Dealer():
-    """  """
+    """ Dealer() """
     def __init__(self,number_decks,chips_bank) -> None:
         self.number_decks = number_decks
         self.chips_bank = chips_bank
@@ -71,18 +71,11 @@ class Dealer():
     def game_start(self):
         self.player_cards = []
         self.dealer_cards = []
-        self.deck_control_cut_card(0)
-        self.player_cards.append(self.deck[0])
-        self.deck.pop(0)
-        self.deck_control_cut_card(1)
-        self.dealer_cards.append(self.deck[1])
-        self.deck.pop(1)
-        self.deck_control_cut_card(2)
-        self.player_cards.append(self.deck[2])
-        self.deck.pop(2)
-        self.deck_control_cut_card(3)
-        self.dealer_cards.append(self.deck[3])
-        self.deck.pop(3)
+        for i in range(2):
+            self.deck_control_cut_card(0)
+            self.player_cards.append(self.deck.pop(0))
+            self.deck_control_cut_card(0)
+            self.dealer_cards.append(self.deck.pop(0))
     def game_hit_player(self):
         self.deck_control_cut_card(0)
         self.player_cards.append(self.deck.pop(0))
@@ -107,14 +100,14 @@ class Dealer():
         return True
     
     def game_dealer_control(self):
-        #Check if player loose
-        if self.game_player_control() == False:
-            return False
         #In case of Blackjack
         self.dealer_card_bj = False
         self.dealer_card_sum = ((card_ranks[self.dealer_cards[0].rank] + card_ranks[self.dealer_cards[1].rank]))
         if self.dealer_card_sum == 21:
             self.dealer_card_bj = True
+            return False
+        #Check if player loose
+        if self.game_player_control() == False:
             return False
         #Check Soft 17
         self.dealer_card_sum = sum(map(lambda c:card_ranks[c.rank],self.dealer_cards))
@@ -156,7 +149,7 @@ class Player():
         if self.chips_account <= 0:
             print("You don't have enought chips to continue playing. END of the game")
             return False
-        cls()
+        print('\n')
         print(self)
         if input_control('YoN','Do you want to play a round?, selec Y or N') == "Y":
             while True:
@@ -208,6 +201,7 @@ def input_control(input_type,message):
             print("The input value is worg or incorrect.")
 
 def game_win_control(dealer,player):
+    """ game_win_control(dealer,player) """
     if dealer.player_card_bj == True:
         if dealer.dealer_card_bj == True:
             player.chips_account += player.beat
@@ -241,99 +235,59 @@ def game_win_control(dealer,player):
 # """ ---------------------------------- """
 
 def game_play():
-    """  """
-    dealer = Dealer(1,100000)
-    player = Player('Facundo',1000)
-    #dealer = Dealer(input_control('INT','Please select the number of deck (1 to 8)'),100000)
-    #player = Player(input_control('STR','Please input the player name'),input_control('INT','Please select the amount to play'))
+    """ game_play() """
+    cls()
+    #dealer = Dealer(3,100000)
+    #player = Player('Facundo',1000)
+    dealer = Dealer(input_control('INT','Please select the number of deck (1 to 8)'),100000)
+    player = Player(input_control('STR','Please input the player name'),input_control('INT','Please select the amount to play'))
     dealer.deck_create()
     dealer.deck_shuffle()
     dealer.deck_add_cut_card()
-    i = 0
     
-
     while player.chips_beat():
-        j = 0
-        k = 0
         dealer.game_start()
-        cls()
-        dealer.print_player(player.p_name)
-        dealer.print_dealer_start()
 
         while dealer.game_player_control():
+            cls()
+            dealer.print_player(player.p_name)
+            dealer.print_dealer_start()
             if (input_control("YoN","Please input Y if you want to Hit another cadd, else input N")) == "Y":
                 dealer.game_hit_player()
             else:
                 break
-            cls()
-            dealer.print_player(player.p_name)
-            dealer.print_dealer_start()
-            j += 1
-
-        #print(f'\nThe counter j is: {j}')
-        #print('----------------------')
+        if dealer.player_card_bj:
+            print("Player BlackJack!!!\n")
 
         while dealer.game_dealer_control():
             dealer.game_hit_dealer()
             cls()
             dealer.print_player(player.p_name)
             dealer.print_dealer()
-            k += 1
 
-        #print(f'\nThe counter k is: {k}')
-        #print('--------------------------------------------')
-        
+        if dealer.dealer_card_bj:
+            print("House BlackJack!!!\n")
+
         dealer.deck_add_played_cards()
-            
-        game_win_control(dealer,player)
-
         cls()
-        print(player)
         dealer.print_player(player.p_name)
-        print(dealer.player_card_bj)
-        print(dealer.player_card_sum)
-
         dealer.print_dealer()
-        print(dealer.dealer_card_bj)
-        print(dealer.dealer_card_sum)
+        print(f'The sum of Player Cards are: {dealer.player_card_sum}')
+        print(f'The sum of House Cards are:  {dealer.dealer_card_sum}')
+        print('')
+        game_win_control(dealer,player)
+        print('')
+        #print(player)
+        #print(f'The bank chip of the House is: {dealer.chips_bank}')
+        print('--------------------------------------')
 
-        i += 1
-        #print(f'\nThe counter i is: {i}')
-
-        print("-------------")
-        for n in dealer.deck:
+        
+        """ for n in dealer.deck:
             print(n, end=" ")
         print(f'\nthe lenght is {len(dealer.deck)}')
-        print('------------------------------------------------------------------')
-
-        
-        
+        print('--------------------------------------\n') """
 
 
-
-
-    
-    cls()
-    dealer.print_player(player.p_name)
-    print(dealer.player_card_sum)
-    dealer.print_dealer()
-    print(dealer.dealer_card_sum)
-     
-    
-
-
-    #s1 = sum(map(lambda c:card_ranks[c],dealer.player_cards))
-    #print(s1)
-    
-
-    print("-------------")
-    for n in dealer.deck:
-        print(n, end=" ")
-    print(f'\nthe lenght is {len(dealer.deck)}')
-
-
-
-# """ ---------------------------------- """
 
 game_play()
 
