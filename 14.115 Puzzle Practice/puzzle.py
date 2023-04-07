@@ -13,7 +13,7 @@ print(file_read.read())
 file_read.close()
 
 #Executed just once:
-shutil.unpack_archive('unzip_me_for_instructions.zip',file_directory+'\\unziped_instructions')
+shutil.unpack_archive('unzip_me_for_instructions.zip',file_directory+'\\unziped_instructions','zip')
 
 walk = (tuple(os.walk(file_directory,True)))
 #print(walk)
