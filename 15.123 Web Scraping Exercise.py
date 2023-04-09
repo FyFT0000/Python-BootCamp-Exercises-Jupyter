@@ -3,6 +3,7 @@ import bs4
 import re
 
 def request_page(web_direction=str):
+    """  """
     response = requests.get(web_direction)
     #print(response.text)
     #print(type(response))
@@ -13,6 +14,7 @@ def request_page(web_direction=str):
     return soup
 
 def get_author_names(soup=bs4.BeautifulSoup):
+    """  """
     author_names = []
     class_author = soup.select('.author')
     #print(class_author)
@@ -30,6 +32,7 @@ def get_author_names(soup=bs4.BeautifulSoup):
     return list(dict.fromkeys(author_names))
 
 def get_quotes(soup=bs4.BeautifulSoup):
+    """  """
     quotes = []
     class_quote = soup.select('.text')
     for quote in class_quote:
@@ -37,6 +40,7 @@ def get_quotes(soup=bs4.BeautifulSoup):
     return list(dict.fromkeys(quotes))
 
 def get_tags_top_ten(soup=bs4.BeautifulSoup):
+    """  """
     top_ten = []
     class_top_ten = soup.select('.col-md-4.tags-box')
     #print(type(soup))
@@ -56,7 +60,8 @@ def get_tags_top_ten(soup=bs4.BeautifulSoup):
     top_ten.pop(0)
     return list(dict.fromkeys(top_ten))
 
-def loop_pages(web_direction=str,stop=int):
+def loop_pages_authors(web_direction=str,stop=int):
+    """  """
     i=1
     j=0
     web_counter = ''
@@ -68,7 +73,7 @@ def loop_pages(web_direction=str,stop=int):
             soup = request_page(web_counter)
             authors_names = get_author_names(soup)
             if authors_names == []:
-                 raise ValueError('There is no value on the page:', i, j, web_counter)
+                 raise ValueError('There is none value on the page:', i, j, web_counter)
         except ValueError as err:
             j += 1
             print('')
@@ -95,6 +100,6 @@ web_direction = 'http://quotes.toscrape.com/page/'
 #top_ten = get_tags_top_ten(request_page(web_direction))
 #print(top_ten)
 
-all_authors,pages = loop_pages(web_direction,20)
-print(f'\nThe authors on all the "{pages}" pages are:\n')
+all_authors,pages = loop_pages_authors(web_direction,20)
+print(f'\n\nThe authors on all the "{pages}" pages are:\n')
 print(all_authors)
